@@ -20,7 +20,7 @@ public class Sorting {
     private static final int SORT_INCREMENT = 10000;
 
     /** Total number of values to try. */
-    private static final int TOTAL_SORT_VALUES = 100;
+    private static final int TOTAL_SORT_VALUES = 10;
 
     /** Total data size. */
     private static final int TOTAL_INTEGER_VALUES = 1000000;
@@ -33,7 +33,16 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] bubbleSort(final int[] array) {
-        return null;
+        for (int j = 0; j < array.length; j++) {
+            for (int i = 1; i < array.length; i++) {
+                if (array[i] < array[i - 1]) {
+                    int temp = array[i];
+                    array[i] = array[i - 1];
+                    array[i - 1] = temp;
+                }
+            }
+        }
+        return array;
     }
 
     /**
@@ -44,7 +53,23 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] selectionSort(final int[] array) {
-        return null;
+        int[] arr = array.clone();
+
+        for (int i = 0; i < arr.length; i++) {
+            int minIndex = i;
+
+            for (int j = i; j < arr.length; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+
+        return arr;
     }
 
     /**
@@ -55,8 +80,35 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] mergeSort(final int[] array) {
-        return null;
+        if (array.length == 1) {
+            return array;
+        } else if (array.length == 2) {
+            if (array[1] < array[0]) {
+                int temp = array[1];
+                array[1] = array[0];
+                array[0] = temp;
+            }
+        }
+
+        int mid = array.length / 2;
+
+
+        int[] tempArr1 = new int[mid];
+        int[] tempArr2 = new int[array.length - mid];
+
+        for (int i = 0; i < mid; i++) {
+            tempArr1[i] = array[i];
+        }
+
+        for (int i = 0; i < mid; i++) {
+            tempArr1[i] = array[i + mid];
+        }
+
+        return merge(mergeSort(tempArr1), mergeSort(tempArr2));
+
     }
+
+
 
     /**
      * Merge helper function that merges two sorted arrays into a single sorted array.
